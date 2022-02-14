@@ -10,12 +10,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class UsersListRepo {
-     lateinit var auth : FirebaseAuth
-     lateinit var db : FirebaseDatabase
+     private lateinit var auth : FirebaseAuth
+     private lateinit var db : FirebaseDatabase
 
      val userList : MutableLiveData<RegisterUserDataClass> = MutableLiveData()
 
      fun getUserList(){
+         auth = FirebaseAuth.getInstance()
+
          val ref = FirebaseDatabase.getInstance().getReference("Users")
 
          ref.addValueEventListener( object : ValueEventListener{

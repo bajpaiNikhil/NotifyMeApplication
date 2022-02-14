@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.notifymeapplication.ListFragment"
+        android:name="com.example.notifymeapplication.UserList.Ui.ListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" />
 </navigation>

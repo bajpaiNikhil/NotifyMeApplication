@@ -15,9 +15,10 @@ import com.example.notifymeapplication.Login.ViewModel.AuthFirebaseViewModelFact
 import com.example.notifymeapplication.R
 import com.example.notifymeapplication.databinding.FragmentLoginBinding
 
+
 class LoginFragment : Fragment() {
     lateinit var loginViewMode : AuthFirebaseViewModel
-    private var _binding : FragmentLoginBinding ?= null
+    private var _binding : FragmentLoginBinding?= null
     private val binding get() = _binding!!
 
 

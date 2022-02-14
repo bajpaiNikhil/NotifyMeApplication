@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "989431537062",
+    "firebase_url": "https://notifymeapplication-cc36b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "notifymeapplication-cc36b",
+    "storage_bucket": "notifymeapplication-cc36b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989431537062:android:c7791da65b78e00572c367",
+        "android_client_info": {
+          "package_name": "com.example.notifymeapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989431537062-hongioou933qrn3kb3ouf8ad2faijp2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDagafK5VHlX5vzkacjFMr26xJIba_IV00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989431537062-hongioou933qrn3kb3ouf8ad2faijp2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

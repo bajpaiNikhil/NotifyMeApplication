@@ -14,11 +14,13 @@ class AuthenticationFirebaseRepo() {
     var firebaseUserLogin : MutableLiveData<FirebaseUser> = MutableLiveData()
     var firebaseRegisterUser  : MutableLiveData<FirebaseUser> = MutableLiveData()
 
-    fun  registerUserToFirebase(email :String , password : String){
+    fun  registerUserToFirebase(email :String , password : String , userName: String , phoneNumber: String){
         auth = FirebaseAuth.getInstance()
         auth.createUserWithEmailAndPassword(email , password).addOnCompleteListener{
             if (it.isSuccessful){
                 firebaseRegisterUser.value = auth.currentUser
+                addUserInDatabase(email , userName , phoneNumber )
+                Log.d("authRepo" , auth.currentUser?.uid.toString())
             }else{
                 Log.d("authRepo" , auth.currentUser.toString())
             }
@@ -26,11 +28,12 @@ class AuthenticationFirebaseRepo() {
     }
 
     fun addUserInDatabase(email : String ,userName :String ,phoneNumber: String ){
+        auth = FirebaseAuth.getInstance()
         val userObj = RegisterUserDataClass(auth.currentUser?.uid.toString() , userName  , email  , phoneNumber)
         db = FirebaseDatabase.getInstance()
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.child(auth.currentUser?.uid.toString()).setValue(userObj)
-        Log.d("AuthRepo" , "addUserInDatabase , $userObj")
+        Log.d("authRepo" , "addUserInDatabase , $userObj")
     }
 
 

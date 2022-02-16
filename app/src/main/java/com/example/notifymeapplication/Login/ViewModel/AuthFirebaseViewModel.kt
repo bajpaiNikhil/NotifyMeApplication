@@ -1,5 +1,6 @@
 package com.example.notifymeapplication.Login.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,18 +20,19 @@ class AuthFirebaseViewModel(private var repository : AuthenticationFirebaseRepo)
             loginUserData = repository.firebaseUserLogin
         }
     }
-    fun registerUser(email: String ,password: String){
+    fun registerUser(email: String ,password: String , userName: String , phoneNumber: String){
         viewModelScope.launch {
-            repository.registerUserToFirebase(email , password)
+            repository.registerUserToFirebase(email , password , userName  ,phoneNumber)
             registerUserData = repository.firebaseRegisterUser
+            Log.d("authViewModel" , registerUserData.toString())
         }
     }
 
-    fun registerUserInDatabase(email: String , userName : String , phoneNumber: String){
-        viewModelScope.launch {
-            repository.addUserInDatabase(email , userName , phoneNumber)
-        }
-    }
+//    fun registerUserInDatabase(email: String , userName : String , phoneNumber: String){
+//        viewModelScope.launch {
+//            repository.addUserInDatabase(email , userName , phoneNumber)
+//        }
+//    }
 
 
 }

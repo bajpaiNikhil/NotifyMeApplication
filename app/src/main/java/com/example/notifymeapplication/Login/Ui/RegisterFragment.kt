@@ -51,9 +51,9 @@ class RegisterFragment : Fragment() {
             val password = binding.firebaseRegisterPasswordTv.text.toString()
             val userName = binding.firebaseRegisterUsernameTv.text.toString()
             val phoneNumber = binding.firebaseRegisterPhNumberTV.text.toString()
-            registerViewModel.registerUser(email, password)
-            addUser()
-            registerViewModel.registerUserInDatabase(email, userName, phoneNumber)
+            registerViewModel.registerUser(email, password , userName ,phoneNumber)
+
+            //registerViewModel.registerUserInDatabase(email, userName, phoneNumber)
             registerViewModel.registerUserData.observe(viewLifecycleOwner, Observer {
                 Log.d("registerFragment", "User Register")
                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
@@ -62,12 +62,12 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun addUser() {
-        val email = binding.firebaseRegisterEmailTv.text.toString()
-        val userName = binding.firebaseRegisterUsernameTv.text.toString()
-        val phoneNumber = binding.firebaseRegisterPhNumberTV.text.toString()
-        registerViewModel.registerUserInDatabase(email, userName, phoneNumber)
-    }
+//    private fun addUser() {
+//        val email = binding.firebaseRegisterEmailTv.text.toString()
+//        val userName = binding.firebaseRegisterUsernameTv.text.toString()
+//        val phoneNumber = binding.firebaseRegisterPhNumberTV.text.toString()
+//        registerViewModel.registerUserInDatabase(email, userName, phoneNumber)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

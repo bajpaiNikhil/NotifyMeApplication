@@ -14,9 +14,11 @@ import com.example.notifymeapplication.Login.ViewModel.AuthFirebaseViewModel
 import com.example.notifymeapplication.Login.ViewModel.AuthFirebaseViewModelFactory
 import com.example.notifymeapplication.R
 import com.example.notifymeapplication.databinding.FragmentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
 
 
 class LoginFragment : Fragment() {
+    lateinit var auth : FirebaseAuth
     lateinit var loginViewMode : AuthFirebaseViewModel
     private var _binding : FragmentLoginBinding?= null
     private val binding get() = _binding!!
@@ -34,8 +36,13 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        auth  = FirebaseAuth.getInstance()
+
         loginViewMode = ViewModelProvider(this , AuthFirebaseViewModelFactory(AuthenticationFirebaseRepo())).get(AuthFirebaseViewModel::class.java)
 
+        if (auth.currentUser!= null){
+            findNavController().navigate(R.id.action_loginFragment_to_listFragment)
+        }
         navigateTo()
     }
 
@@ -46,6 +53,7 @@ class LoginFragment : Fragment() {
         binding.firebaseLoginBtn.setOnClickListener {
             val email = binding.firebaseLoginEmailTv.text.toString()
             val password = binding.firebaseLoginPasswordTv.text.toString()
+            Log.d("loginFragment" , "LoginAccess ${email} , $password")
             loginViewMode.loginUser(email , password)
             loginViewMode.loginUserData.observe(viewLifecycleOwner , Observer {
                Log.d("loginFragment" , "LoginAccess")

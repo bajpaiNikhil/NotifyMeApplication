@@ -61,7 +61,7 @@ class NotifyFragment : Fragment() {
         playNotification()
         handler.postDelayed(object :Runnable{
             override fun run() {
-                notifyViewModel.muteNotification()
+                muteNotification()
                 notifyViewModel.deleteMessage()
                 findNavController().navigate(R.id.listFragment)
             }
@@ -74,6 +74,10 @@ class NotifyFragment : Fragment() {
         player.isLooping = true
         Log.d("NotifyFragment" , "Player is Playing")
         player.start()
+    }
+    private fun muteNotification() {
+        Log.d("NotifyFragment" , "Player is Stopped")
+        player.stop()
     }
 
 

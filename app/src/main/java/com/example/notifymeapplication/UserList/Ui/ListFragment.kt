@@ -2,10 +2,8 @@ package com.example.notifymeapplication.UserList.Ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -50,6 +48,7 @@ class ListFragment : Fragment() {
 
         senderId = auth.currentUser?.uid.toString()
 
+        setHasOptionsMenu(true)
 
         binding.userListRview.layoutManager = LinearLayoutManager(context)
         listFragmentViewModel = ViewModelProvider(this , UserListViewModelFactory(UsersListRepo()))[UserListViewModel::class.java]
@@ -69,10 +68,24 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.notifyFragment)
         })
 
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_menu , menu)
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.logOut->{
+                auth.signOut()
+                findNavController().navigate(R.id.loginFragment)
+                Log.d("ListFragment" , "Menu item clicked")
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

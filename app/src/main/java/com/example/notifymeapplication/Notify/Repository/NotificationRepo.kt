@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener
 class NotificationRepo {
     lateinit var auth : FirebaseAuth
     fun removeNotification(){
+        auth = FirebaseAuth.getInstance()
         val ref  = FirebaseDatabase.getInstance().getReference("Chat")
         ref.addValueEventListener(object  : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

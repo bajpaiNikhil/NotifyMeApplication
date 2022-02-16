@@ -11,7 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.notifymeapplication.Notify.Repository.NotificationRepo
+import com.example.notifymeapplication.Notify.ViewModel.NotifyViewModel
+import com.example.notifymeapplication.Notify.ViewModel.NotifyViewModelFactory
 import com.example.notifymeapplication.R
 import com.example.notifymeapplication.UserList.Model.MessageDataClass
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +30,11 @@ class NotifyFragment : Fragment() {
     lateinit var auth : FirebaseAuth
 
     lateinit var player: MediaPlayer
+
+    lateinit var notifyViewModel : NotifyViewModel
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,26 +53,20 @@ class NotifyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        notifyViewModel = ViewModelProvider(this ,NotifyViewModelFactory(NotificationRepo())).get(NotifyViewModel::class.java)
+
         auth = FirebaseAuth.getInstance()
 
         val handler = Handler()
         playNotification()
         handler.postDelayed(object :Runnable{
             override fun run() {
-                muteNotification()
-                removeChatNotification()
+                notifyViewModel.muteNotification()
+                notifyViewModel.deleteMessage()
                 findNavController().navigate(R.id.listFragment)
             }
         },10000)
-
-//        playNotification()
-//        val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-//        val player: MediaPlayer = MediaPlayer.create(requireContext(), notification)
-//        player.isLooping = true
-//        player.start()
     }
-
-
 
     private fun playNotification() {
         val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -71,33 +74,6 @@ class NotifyFragment : Fragment() {
         player.isLooping = true
         Log.d("NotifyFragment" , "Player is Playing")
         player.start()
-    }
-    private fun muteNotification() {
-        Log.d("NotifyFragment" , "Player is Stopped")
-        player.stop()
-    }
-
-    private fun removeChatNotification() {
-
-        val ref = FirebaseDatabase.getInstance().getReference("Chat")
-        ref.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()){
-                    for(deleteSnapshot in snapshot.children){
-                        val deleteObj = deleteSnapshot.getValue(MessageDataClass::class.java)
-                        if (auth.currentUser?.uid.toString().equals(deleteObj?.receiverId)){
-                            val deleteRef = FirebaseDatabase.getInstance().getReference("Chat").child(deleteSnapshot.key.toString())
-                            deleteRef.removeValue()
-                        }
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
 
 

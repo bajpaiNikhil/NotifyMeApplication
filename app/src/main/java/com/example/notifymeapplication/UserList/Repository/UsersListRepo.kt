@@ -38,15 +38,15 @@ class UsersListRepo {
              }
          })
      }
-    fun checkForMessage(senderId : String , receiverId : String ){
+    fun checkForMessage(senderId : String){
         val ref =  FirebaseDatabase.getInstance().getReference("Chat")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if( snapshot.exists()){
                     for(chatSnapshot in snapshot.children){
                         val chatObj  = chatSnapshot.getValue(MessageDataClass::class.java)
-                        Log.d("UserListRepo" , "chat in the application ${chatObj?.senderId} , ${chatObj?.receiverId} , $senderId ,$receiverId")
-                        if(chatObj!!.senderId.equals(senderId) && chatObj.receiverId.equals(receiverId) || chatObj.senderId.equals(receiverId) && chatObj.receiverId.equals(senderId)){
+                        Log.d("UserListRepo" , "chat in the application ${chatObj?.senderId} , ${chatObj?.receiverId} , $senderId ")
+                        if(chatObj?.receiverId.equals(senderId)){
                             //move to the ring fragment
                             chatList.value = chatObj!!
                             Log.d("UserListRepo" , "chat in the application $chatObj")

@@ -21,9 +21,9 @@ class UserListViewModel(private val repo : UsersListRepo): ViewModel() {
         }
     }
 
-    fun readMessage(senderId : String ,  receiverId : String){
+    fun readMessage(senderId : String){
         viewModelScope.launch {
-            repo.checkForMessage(senderId , receiverId)
+            repo.checkForMessage(senderId )
             chatList = repo.chatList
         }
     }

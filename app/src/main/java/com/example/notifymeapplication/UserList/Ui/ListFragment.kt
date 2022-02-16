@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notifymeapplication.Login.Model.RegisterUserDataClass
+import com.example.notifymeapplication.R
 import com.example.notifymeapplication.UserList.Adapter.UserListAdapter
 import com.example.notifymeapplication.UserList.Repository.UsersListRepo
 import com.example.notifymeapplication.UserList.ViewModel.UserListViewModel
@@ -19,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ListFragment : Fragment() {
 
-    lateinit var receiverId : String
     lateinit var senderId  : String
     lateinit var auth : FirebaseAuth
     private  var _binding : FragmentListBinding?=null
@@ -60,11 +61,12 @@ class ListFragment : Fragment() {
             binding.userListRview.adapter = UserListAdapter(userArrayList)
         })
 
-        Log.d("ListFragment" , "receiver Is $receiverId")
-        listFragmentViewModel.readMessage(senderId , receiverId)
+
+        listFragmentViewModel.readMessage(senderId)
         listFragmentViewModel.chatList.observe(viewLifecycleOwner , Observer {
             Log.d("ListFragment" , "chat we saw $it")
 
+            findNavController().navigate(R.id.notifyFragment)
         })
 
 

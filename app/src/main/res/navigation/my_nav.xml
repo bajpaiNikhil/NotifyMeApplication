@@ -30,5 +30,14 @@
         android:id="@+id/listFragment"
         android:name="com.example.notifymeapplication.UserList.Ui.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_listFragment_to_notifyFragment"
+            app:destination="@id/notifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notifyFragment"
+        android:name="com.example.notifymeapplication.Notify.Ui.NotifyFragment"
+        android:label="fragment_notify"
+        tools:layout="@layout/fragment_notify" />
 </navigation>
